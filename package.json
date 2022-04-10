@@ -2,10 +2,10 @@
   "name": "node_server_boilerplate",
   "version": "1.0.0",
   "description": "node express server with typescript support",
-  "main": "./src/index.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "build": "rimraf ./dist && tsc",
-    "dev": "nodemon --watch './src/**' ./src/index.ts",
+    "build": "NODE_ENV=production rimraf ./dist & tsc",
+    "dev": "NODE_ENV=development nodemon --watch './src/**' src/server.ts",
     "lint": "eslint ./src --ext .ts",
     "lint:fix": "eslint --fix ./src --ext .ts",
     "prepare": "husky install"
@@ -39,8 +39,10 @@
     "ts-node": "^10.7.0"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.181",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "lodash": "^4.17.21"
   }
 }
