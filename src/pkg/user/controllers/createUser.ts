@@ -1,10 +1,10 @@
 import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
+import { insertUser } from '../../../database/insertUser';
+import { AppResponse } from '../../../models/AppResponse';
 import type { User } from '../../../models/User';
 import { camelize } from '../../../utils/transforms';
-import { AppResponse } from '../../../models/AppResponse';
-import { insertUser } from '../../../database/insertUser';
 
 export const userValidation = () => {
   return [
