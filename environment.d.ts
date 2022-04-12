@@ -10,6 +10,7 @@ declare global {
       PGPASSWORD?: string;
       PGDATABASE?: string;
       PGPORT?: string;
+      PRIVATE_KEY: string;
     }
   }
 }

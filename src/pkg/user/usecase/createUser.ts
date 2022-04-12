@@ -1,12 +1,13 @@
 import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
-import { insertUser } from '../../../database/insertUser';
 import { AppResponse } from '../../../models/AppResponse';
-import type { User } from '../../../models/User';
-import { camelize } from '../../../utils/transforms';
+import { CreateUserInfo } from '../../../models/User';
+import { setCookieUserId } from '../../../utils/cookie';
+import { camelize, hash } from '../../../utils/transforms';
+import { insertUser } from '../repository/insertUser';
 
-export const userValidation = () => {
+export const createUserValidation = () => {
   return [
     body(['first_name', 'last_name', 'password'])
       .exists()
@@ -25,14 +26,17 @@ export const createUser = async (req: Request, resp: Response) => {
     });
   }
 
-  const user = camelize(req.body) as User;
+  const user = camelize(req.body) as CreateUserInfo;
+  user.password = hash(user.password);
 
-  const ok = await insertUser(user);
-  if (!ok) {
+  const id = await insertUser(user);
+  if (!id) {
     return resp.status(409).send(<AppResponse<never>>{
       errors: [`User already exists`],
     });
   }
+
+  setCookieUserId(resp, id);
 
   return resp.send(<AppResponse<string>>{
     data: 'user inserted successfully',

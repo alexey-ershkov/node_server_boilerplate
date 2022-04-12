@@ -1,11 +1,13 @@
 import Router from 'express';
 
-import { createUser, userValidation } from './controllers/createUser';
-import { getUser } from './controllers/getUser';
+import { authUser, authValidation } from './usecase/authUser';
+import { createUser, createUserValidation } from './usecase/createUser';
+import { getUser } from './usecase/getUser';
 
 const router = Router();
 
 router.get('/', getUser);
-router.post('/', userValidation(), createUser);
+router.post('/', createUserValidation(), createUser);
+router.post('/auth', authValidation(), authUser);
 
 export default router;
