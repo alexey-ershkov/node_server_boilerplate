@@ -24,6 +24,9 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/lodash": "^4.14.181",
+    "@types/morgan": "^1.9.3",
+    "@types/pg": "^8.6.5",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
     "eslint": "^8.13.0",
@@ -39,11 +42,14 @@
     "ts-node": "^10.7.0"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.181",
+    "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "express-validator": "^6.14.0",
     "lodash": "^4.17.21",
-    "pg": "^8.7.3"
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "winston": "^3.7.2"
   }
 }

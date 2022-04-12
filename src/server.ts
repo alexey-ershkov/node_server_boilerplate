@@ -1,16 +1,21 @@
+import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import express from 'express';
+import morgan from 'morgan';
 
 import corsMiddleware from './middlewares/cors';
-import helloHandler from './pkg/hello';
+import userPackage from './pkg/user';
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const server = express();
-server.use(corsMiddleware);
 
-server.use('/', helloHandler);
+server.use(morgan('dev'));
+server.use(corsMiddleware);
+server.use(bodyParser.json());
+
+server.use(userPackage);
 
 server.listen(PORT);
 console.log(`Server listening on port ${PORT}`);

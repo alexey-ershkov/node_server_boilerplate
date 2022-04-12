@@ -5,6 +5,11 @@ declare global {
       PORT?: string;
       PWD: string;
       ALLOW_LIST: string;
+      PGUSER?: string;
+      PGHOST?: string;
+      PGPASSWORD?: string;
+      PGDATABASE?: string;
+      PGPORT?: string;
     }
   }
 }
