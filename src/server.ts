@@ -5,6 +5,7 @@ import express from 'express';
 import morgan from 'morgan';
 
 import corsMiddleware from './middlewares/cors';
+import stockPackage from './pkg/stock';
 import userPackage from './pkg/user';
 
 dotenv.config();
@@ -18,6 +19,7 @@ server.use(bodyParser.json());
 server.use(cookieParser());
 
 server.use(userPackage);
+server.use(stockPackage);
 
 server.listen(PORT);
 console.log(`Server listening on port ${PORT}`);

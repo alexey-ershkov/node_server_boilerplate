@@ -26,5 +26,6 @@ module.exports = {
     'import/no-relative-packages': 'off',
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
+    'no-param-reassign': 'off',
   },
 };

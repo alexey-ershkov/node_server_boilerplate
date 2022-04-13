@@ -3,19 +3,11 @@ import { omit } from 'lodash';
 
 import { AppResponse } from '../../../models/AppResponse';
 import { UserInfo } from '../../../models/User';
-import { getCookieUserId } from '../../../utils/cookie';
 import { decamelize } from '../../../utils/transforms';
-import { getUserById } from '../repository/getUser';
+import { selectUserById } from '../repository/selectUser';
 
 export const getUser = async (req: Request, resp: Response) => {
-  const userId = getCookieUserId(req);
-  if (!userId) {
-    return resp.status(401).send(<AppResponse<never>>{
-      errors: ['User not authorised'],
-    });
-  }
-
-  const user = await getUserById(userId);
+  const user = await selectUserById(resp.locals.userId);
   if (!user) {
     return resp.status(404).send(<AppResponse<never>>{
       errors: ['user not found'],

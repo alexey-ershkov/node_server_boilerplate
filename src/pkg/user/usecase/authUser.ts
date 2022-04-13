@@ -7,7 +7,7 @@ import { AppResponse } from '../../../models/AppResponse';
 import { AuthUserInfo, UserInfo } from '../../../models/User';
 import { setCookieUserId } from '../../../utils/cookie';
 import { decamelize } from '../../../utils/transforms';
-import { getUserByEmail } from '../repository/getUser';
+import { selectUserByEmail } from '../repository/selectUser';
 
 export const authValidation = () => {
   return [
@@ -25,7 +25,7 @@ export const authUser = async (req: Request, resp: Response) => {
   }
 
   const { email, password } = req.body as AuthUserInfo;
-  const user = await getUserByEmail(email);
+  const user = await selectUserByEmail(email);
   if (!user) {
     return resp.status(404).send(<AppResponse<never>>{
       errors: [`User with email ${email} not found`],
