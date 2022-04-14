@@ -2,10 +2,12 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 
 import { AppResponse, UserStock } from '../../../common/models';
-import { selectStockBySymbol } from '../../stock/repository/selectStock';
-import { deleteUserStocksBySymbolAndId } from '../repository/deleteUserStocks';
-import { insertUserStock } from '../repository/insertUserStock';
-import { selectUserStockCountBySymbolAndId } from '../repository/selectUserStocks';
+import { selectStockBySymbol } from '../../stock/repository';
+import {
+  deleteUserStocksBySymbolAndId,
+  insertUserStock,
+  selectUserStockBySymbolAndId,
+} from '../repository';
 
 export const removeUserStock = async (req: Request, resp: Response) => {
   const errors = validationResult(req);
@@ -31,12 +33,12 @@ export const removeUserStock = async (req: Request, resp: Response) => {
     });
   }
 
-  const stockCount = await selectUserStockCountBySymbolAndId(
+  const userStock = await selectUserStockBySymbolAndId(
     userStockRemove.stockSymbol,
     userStockRemove.userId,
   );
 
-  if (!stockCount) {
+  if (!userStock) {
     return resp.status(404).send(<AppResponse<never>>{
       errors: [
         `User with id ${userStockRemove.userId} doesn't have ${userStockRemove.stockSymbol} stock`,
@@ -44,10 +46,10 @@ export const removeUserStock = async (req: Request, resp: Response) => {
     });
   }
 
-  if (stockCount < userStockRemove.count) {
+  if (userStock.count < userStockRemove.count) {
     return resp.status(404).send(<AppResponse<never>>{
       errors: [
-        `User with id ${userStockRemove.userId} have ${stockCount} ${userStockRemove.stockSymbol} stock. That is not enough`,
+        `User with id ${userStockRemove.userId} have ${userStock.count} ${userStockRemove.stockSymbol} stocks. That is not enough`,
       ],
     });
   }
@@ -56,7 +58,7 @@ export const removeUserStock = async (req: Request, resp: Response) => {
 
   const newCount = await insertUserStock(userStockRemove);
 
-  if (stockCount === -userStockRemove.count) {
+  if (userStock.count === -userStockRemove.count) {
     await deleteUserStocksBySymbolAndId(userStockRemove.stockSymbol, userStockRemove.userId);
   }
 

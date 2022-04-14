@@ -3,7 +3,7 @@ import { omit } from 'lodash';
 
 import { AppResponse, UserInfo } from '../../../common/models';
 import { decamelize } from '../../../common/utils/transforms';
-import { selectUserById } from '../repository/selectUser';
+import { selectUserById } from '../repository';
 
 export const getUser = async (req: Request, resp: Response) => {
   const user = await selectUserById(resp.locals.userId);

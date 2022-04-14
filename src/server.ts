@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 
+import { api } from './api';
 import corsMiddleware from './middlewares/cors';
 import stockPackage from './pkg/stock';
 import userPackage from './pkg/user';
@@ -18,8 +19,10 @@ server.use(corsMiddleware);
 server.use(bodyParser.json());
 server.use(cookieParser());
 
-server.use(userPackage);
-server.use(stockPackage);
+const { user, stock } = api;
+
+server.use(user.prefix, userPackage);
+server.use(stock.prefix, stockPackage);
 
 server.listen(PORT);
 console.log(`Server listening on port ${PORT}`);

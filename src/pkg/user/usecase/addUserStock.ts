@@ -2,8 +2,8 @@ import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
 import { AppResponse, UserStock } from '../../../common/models';
-import { selectStockBySymbol } from '../../stock/repository/selectStock';
-import { insertUserStock } from '../repository/insertUserStock';
+import { selectStockBySymbol } from '../../stock/repository';
+import { insertUserStock } from '../repository';
 
 export const userStockValidation = () => {
   return [

@@ -6,8 +6,7 @@ import { isEmpty } from 'lodash';
 import { AppResponse, FinnhubStock, Stock } from '../../../common/models';
 import { decamelize } from '../../../common/utils/transforms';
 import { logger } from '../../../utils';
-import { insertStock } from '../repository/insertStock';
-import { selectAllStocks, selectStockBySymbol } from '../repository/selectStock';
+import { insertStock, selectAllStocks, selectStockBySymbol } from '../repository';
 
 dotenv.config();
 const baseUrl = `https://finnhub.io/api/v1/stock/profile2?token=${process.env.FINNHUB_KEY}&symbol=`;

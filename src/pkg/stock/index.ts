@@ -1,10 +1,12 @@
 import Router from 'express';
 
-import { getAllStocks, getStockBySymbol } from './usecase/getStocks';
+import { api } from '../../api';
+import { generateRouterPaths } from '../../utils/generateRouterPaths';
 
 const router = Router();
 
-router.get('/stocks', getAllStocks);
-router.get('/stocks/:symbol', getStockBySymbol);
+const { stock } = api;
+
+generateRouterPaths(stock.paths, router);
 
 export default router;

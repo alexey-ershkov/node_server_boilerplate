@@ -8,9 +8,7 @@ const baseQuery =
   'share_outstanding, industry from users_stock ' +
   'join stocks s on s.symbol = users_stock.stock_symbol';
 const selectByIdQuery = `${baseQuery} where user_id = $1`;
-
-const selectUserStockCountBySymbolAndIdQuery =
-  'select count from users_stock where user_id = $1 and stock_symbol = $2';
+const selectBySymbolAndId = `${baseQuery} where user_id = $1 and stock_symbol = $2`;
 
 export const selectUserStocksById = async (
   userId: number | undefined,
@@ -23,16 +21,13 @@ export const selectUserStocksById = async (
   return camelize(rows) as (Stock & { count: number })[];
 };
 
-export const selectUserStockCountBySymbolAndId = async (
+export const selectUserStockBySymbolAndId = async (
   symbol: string,
   userId: number | undefined,
-): Promise<number | null> => {
+): Promise<(Stock & { count: number }) | null> => {
   if (!userId) {
     return null;
   }
-  const { rows, rowCount } = await pool.query(selectUserStockCountBySymbolAndIdQuery, [
-    userId,
-    symbol,
-  ]);
-  return rowCount ? rows[0].count : null;
+  const { rows, rowCount } = await pool.query(selectBySymbolAndId, [userId, symbol]);
+  return rowCount ? (camelize(rows[0]) as Stock & { count: number }) : null;
 };

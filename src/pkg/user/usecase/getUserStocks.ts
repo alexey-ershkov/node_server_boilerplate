@@ -1,11 +1,8 @@
 import type { Request, Response } from 'express';
 
-import { AppResponse, UserInfo } from '../../../common/models';
+import { AppResponse, Stock, UserInfo } from '../../../common/models';
 import { decamelize } from '../../../common/utils/transforms';
-import {
-  selectUserStockCountBySymbolAndId,
-  selectUserStocksById,
-} from '../repository/selectUserStocks';
+import { selectUserStockBySymbolAndId, selectUserStocksById } from '../repository';
 
 export const getUserStocks = async (req: Request, resp: Response) => {
   const stocks = await selectUserStocksById(resp.locals.userId);
@@ -15,7 +12,7 @@ export const getUserStocks = async (req: Request, resp: Response) => {
   });
 };
 
-export const getUserStockCount = async (req: Request<{ symbol?: string }>, resp: Response) => {
+export const getUserStock = async (req: Request<{ symbol?: string }>, resp: Response) => {
   if (!resp.locals.userId) {
     return resp.status(401).send(<AppResponse<never>>{
       errors: ['User unauthorized'],
@@ -24,15 +21,15 @@ export const getUserStockCount = async (req: Request<{ symbol?: string }>, resp:
 
   const { userId } = resp.locals;
   if (req.params.symbol) {
-    const count = await selectUserStockCountBySymbolAndId(req.params.symbol, userId);
-    if (!count) {
+    const stock = await selectUserStockBySymbolAndId(req.params.symbol, userId);
+    if (!stock) {
       return resp.status(404).send(<AppResponse<never>>{
         errors: [`User with id ${userId} doesn't have ${req.params.symbol} stock`],
       });
     }
 
-    return resp.send(<AppResponse<number>>{
-      data: count,
+    return resp.send(<AppResponse<Stock & { count: number }>>{
+      data: stock,
     });
   }
 

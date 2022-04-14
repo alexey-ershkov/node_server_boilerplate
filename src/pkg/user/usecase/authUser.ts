@@ -6,7 +6,7 @@ import { omit } from 'lodash';
 import { AppResponse, AuthUserInfo, UserInfo } from '../../../common/models';
 import { decamelize } from '../../../common/utils/transforms';
 import { setCookieUserId } from '../../../utils';
-import { selectUserByEmail } from '../repository/selectUser';
+import { selectUserByEmail } from '../repository';
 
 export const authValidation = () => {
   return [

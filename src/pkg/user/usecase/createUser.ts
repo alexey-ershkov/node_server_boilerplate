@@ -4,7 +4,7 @@ import { body, validationResult } from 'express-validator';
 import { AppResponse, CreateUserInfo, UserInfo } from '../../../common/models';
 import { camelize } from '../../../common/utils/transforms';
 import { hash, setCookieUserId } from '../../../utils';
-import { insertUser } from '../repository/insertUser';
+import { insertUser } from '../repository';
 
 export const createUserValidation = () => {
   return [
