@@ -15,7 +15,7 @@ interface InsertStockReturn {
 export const insertStock = async (stock: Stock): Promise<InsertStockReturn> => {
   const dbStock = await selectStockBySymbol(stock.symbol);
   if (dbStock) {
-    return Promise.resolve({ error: false, exists: true });
+    return { error: false, exists: true };
   }
   try {
     await pool.query(insertQuery, [
@@ -31,9 +31,9 @@ export const insertStock = async (stock: Stock): Promise<InsertStockReturn> => {
       stock.shareOutstanding,
       stock.industry,
     ]);
-    return Promise.resolve({ error: false, exists: false });
+    return { error: false, exists: false };
   } catch (e) {
     logger.error(`Stock insert into DB error: ${e.message}`);
-    return Promise.resolve({ error: true, exists: false });
+    return { error: true, exists: false };
   }
 };

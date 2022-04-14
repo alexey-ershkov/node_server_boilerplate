@@ -8,14 +8,14 @@ const selectByPasswordQuery = `${baseQuery} where email = $1`;
 
 export const selectUserById = async (id: number | undefined): Promise<User | null> => {
   if (!id) {
-    return Promise.resolve(null);
+    return null;
   }
 
   const { rows, rowCount } = await pool.query(selectByIdQuery, [id]);
-  return Promise.resolve(rowCount ? (camelize(rows[0]) as User) : null);
+  return rowCount ? (camelize(rows[0]) as User) : null;
 };
 
 export const selectUserByEmail = async (email: string): Promise<User | null> => {
   const { rows, rowCount } = await pool.query(selectByPasswordQuery, [email]);
-  return Promise.resolve(rowCount ? (camelize(rows[0]) as User) : null);
+  return rowCount ? (camelize(rows[0]) as User) : null;
 };

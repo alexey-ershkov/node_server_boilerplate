@@ -16,11 +16,11 @@ export const selectUserStocksById = async (
   userId: number | undefined,
 ): Promise<(Stock & { count: number })[]> => {
   if (!userId) {
-    return Promise.resolve(null);
+    return null;
   }
 
   const { rows } = await pool.query(selectByIdQuery, [userId]);
-  return Promise.resolve(camelize(rows) as (Stock & { count: number })[]);
+  return camelize(rows) as (Stock & { count: number })[];
 };
 
 export const selectUserStockCountBySymbolAndId = async (
@@ -28,9 +28,9 @@ export const selectUserStockCountBySymbolAndId = async (
   userId: number | undefined,
 ): Promise<number | null> => {
   if (!userId) {
-    return Promise.resolve(null);
+    return null;
   }
 
   const { rows, rowCount } = await pool.query(selectUserStockCountBySymbolAndIdQuery, [userId]);
-  return Promise.resolve(rowCount ? rows[0].count : null);
+  return rowCount ? rows[0].count : null;
 };

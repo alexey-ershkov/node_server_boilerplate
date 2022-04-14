@@ -13,9 +13,9 @@ export const insertUserStock = async ({
 }: UserStock): Promise<null | number> => {
   try {
     const { rows } = await pool.query(insertQuery, [userId, stockSymbol, count]);
-    return Promise.resolve(rows[0].count);
+    return rows[0].count;
   } catch (e) {
     logger.error(`UserStock insert into DB error: ${e.message}`);
-    return Promise.resolve(null);
+    return null;
   }
 };

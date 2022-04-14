@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
-import { AppResponse, CreateUserInfo } from '../../../common/models';
+import { AppResponse, CreateUserInfo, UserInfo } from '../../../common/models';
 import { camelize } from '../../../common/utils/transforms';
 import { hash, setCookieUserId } from '../../../utils';
 import { insertUser } from '../repository/insertUser';
@@ -28,16 +28,16 @@ export const createUser = async (req: Request, resp: Response) => {
   const user = camelize(req.body) as CreateUserInfo;
   user.password = hash(user.password);
 
-  const id = await insertUser(user);
-  if (!id) {
+  const userInfo = await insertUser(user);
+  if (!userInfo) {
     return resp.status(409).send(<AppResponse<never>>{
       errors: [`User already exists`],
     });
   }
 
-  setCookieUserId(resp, id);
+  setCookieUserId(resp, userInfo.id);
 
-  return resp.send(<AppResponse<string>>{
-    data: 'user inserted successfully',
+  return resp.send(<AppResponse<UserInfo>>{
+    data: userInfo,
   });
 };
