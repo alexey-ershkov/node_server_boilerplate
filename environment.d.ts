@@ -14,6 +14,7 @@ declare global {
       PGPORT?: string;
       PRIVATE_KEY: string;
       FINNHUB_KEY: string;
+      SYMBOLS: string;
     }
   }
 }

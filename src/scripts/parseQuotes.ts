@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-import { getStocksFromRemote } from '../pkg/stock/usecase';
+import { getQuotesFromRemote } from '../pkg/stock/usecase/getQuotesFromRemote';
 import { logger } from '../utils';
 
 dotenv.config();
@@ -9,7 +9,7 @@ const symbols = process.env.SYMBOLS.split(',');
 let success = true;
 
 symbols.forEach((symbol) => {
-  getStocksFromRemote(symbol).then((res) => {
+  getQuotesFromRemote(symbol).then((res) => {
     if (!res) {
       success = false;
     }
@@ -17,7 +17,7 @@ symbols.forEach((symbol) => {
 });
 
 if (success) {
-  logger.info('Stocks parse successfully');
+  logger.info('Quotes parse successfully');
 } else {
   logger.error('Failed to parse stocks');
 }

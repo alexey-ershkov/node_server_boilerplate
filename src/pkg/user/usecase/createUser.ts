@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
+import { decamelize } from '../../../common';
 import { AppResponse, CreateUserInfo, UserInfo } from '../../../common/models';
 import { camelize } from '../../../common/utils/transforms';
 import { hash, setCookieUserId } from '../../../utils';
@@ -38,6 +39,6 @@ export const createUser = async (req: Request, resp: Response) => {
   setCookieUserId(resp, userInfo.id);
 
   return resp.send(<AppResponse<UserInfo>>{
-    data: userInfo,
+    data: decamelize(userInfo),
   });
 };

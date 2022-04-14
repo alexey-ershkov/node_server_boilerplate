@@ -29,7 +29,7 @@ export const getUserStock = async (req: Request<{ symbol?: string }>, resp: Resp
     }
 
     return resp.send(<AppResponse<Stock & { count: number }>>{
-      data: stock,
+      data: decamelize(stock),
     });
   }
 

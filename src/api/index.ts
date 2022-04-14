@@ -3,6 +3,7 @@ import { ValidationChain } from 'express-validator';
 
 import { authMiddleware } from '../middlewares/auth';
 import { getAllStocks, getStockBySymbol } from '../pkg/stock/usecase';
+import { getStocksCandles } from '../pkg/stock/usecase/getStocksCandles';
 import {
   addUserStock,
   authUser,
@@ -42,12 +43,14 @@ export const api: Api = {
         middlewares: [authMiddleware],
         handler: getUser,
       },
+      // Получить акции пользователя
       {
         url: '/stocks',
         method: 'get',
         middlewares: [authMiddleware],
         handler: getUserStocks,
       },
+      // Получить акцию пользователя
       {
         url: '/stocks/:symbol',
         method: 'get',
@@ -55,18 +58,21 @@ export const api: Api = {
         handler: getUserStock,
       },
       // Post methods
+      // Войти
       {
         url: '/login',
         method: 'post',
         middlewares: [authValidation()],
         handler: authUser,
       },
+      // Зарегистрироваться
       {
         url: '/register',
         method: 'post',
         middlewares: [createUserValidation()],
         handler: createUser,
       },
+      // Добавить акции
       {
         url: '/stocks',
         method: 'post',
@@ -74,6 +80,7 @@ export const api: Api = {
         handler: addUserStock,
       },
       // Delete methods
+      // Удалить акции
       {
         url: '/stocks',
         method: 'delete',
@@ -86,12 +93,21 @@ export const api: Api = {
     prefix: '/stock',
     paths: [
       // Get methods
+      // Получить все акции
       {
         url: '/',
         method: 'get',
         middlewares: [],
         handler: getAllStocks,
       },
+      // Получить свечи для акций
+      {
+        url: '/candles',
+        method: 'get',
+        middlewares: [],
+        handler: getStocksCandles,
+      },
+      // Получить информацию об одной акции
       {
         url: '/:symbol',
         method: 'get',

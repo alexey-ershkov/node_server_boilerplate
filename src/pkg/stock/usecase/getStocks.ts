@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import type { Request, Response } from 'express';
 import { isEmpty } from 'lodash';
 
-import { AppResponse, FinnhubStock, Stock } from '../../../common/models';
+import { AppResponse, FinnhubStock, Quote, Stock } from '../../../common/models';
 import { decamelize } from '../../../common/utils/transforms';
 import { logger } from '../../../utils';
 import { insertStock, selectAllStocks, selectStockBySymbol } from '../repository';
@@ -11,10 +11,8 @@ import { insertStock, selectAllStocks, selectStockBySymbol } from '../repository
 dotenv.config();
 const baseUrl = `https://finnhub.io/api/v1/stock/profile2?token=${process.env.FINNHUB_KEY}&symbol=`;
 
-export const getStocksFromRemote = (symbols: string[]): boolean => {
-  let success = true;
-
-  symbols.forEach(async (symbol) => {
+export const getStocksFromRemote = async (symbol: string): Promise<boolean> => {
+  try {
     const { data } = await axios.get<FinnhubStock>(baseUrl + symbol);
     if (!isEmpty(data)) {
       const { ticker, weburl, finnhubIndustry, ...rest } = data;
@@ -30,19 +28,22 @@ export const getStocksFromRemote = (symbols: string[]): boolean => {
         logger.warn(`Stock with symbol ${symbol} already exists`);
       }
       if (error) {
-        success = false;
         logger.error(`Error when insert stock with symbol ${symbol}`);
+        return false;
       }
     }
-  });
+  } catch (e) {
+    logger.error(`Error while stock ${symbol} req: ${e.message}`);
+    return false;
+  }
 
-  return success;
+  return true;
 };
 
 export const getAllStocks = async (req: Request, resp: Response) => {
   const allStocks = await selectAllStocks();
-  resp.send(<AppResponse<Stock[]>>{
-    data: allStocks,
+  resp.send(<AppResponse<(Stock & Quote)[]>>{
+    data: decamelize(allStocks),
   });
 };
 
@@ -55,7 +56,7 @@ export const getStockBySymbol = async (req: Request<{ symbol?: string }>, resp: 
       });
     }
 
-    return resp.send(<AppResponse<Stock>>{
+    return resp.send(<AppResponse<Stock & Quote>>{
       data: decamelize(stock),
     });
   }

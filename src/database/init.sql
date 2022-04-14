@@ -1,6 +1,7 @@
-drop table if exists users_stock;
 drop table if exists users cascade;
 drop table if exists stocks cascade;
+drop table if exists users_stock;
+drop table if exists quote;
 
 create extension if not exists citext;
 
@@ -36,4 +37,17 @@ create table users_stock
     stock_symbol citext collate "C" not null references stocks (symbol) on delete cascade,
     count        integer            not null,
     constraint pk_user_id_stock_symbol primary key (user_id, stock_symbol)
-)
+);
+
+create table quote
+(
+    symbol         citext collate "C" primary key not null references stocks (symbol) on delete cascade,
+    current_price  float                          not null,
+    change         float                          not null,
+    percent_change float                          not null,
+    high           float                          not null,
+    low            float                          not null,
+    open           float                          not null,
+    prev_close     float                          not null,
+    updated_at     timestamp                           not null
+);
