@@ -30,7 +30,9 @@ export const selectUserStockCountBySymbolAndId = async (
   if (!userId) {
     return null;
   }
-
-  const { rows, rowCount } = await pool.query(selectUserStockCountBySymbolAndIdQuery, [userId]);
+  const { rows, rowCount } = await pool.query(selectUserStockCountBySymbolAndIdQuery, [
+    userId,
+    symbol,
+  ]);
   return rowCount ? rows[0].count : null;
 };

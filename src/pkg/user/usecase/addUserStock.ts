@@ -5,7 +5,7 @@ import { AppResponse, UserStock } from '../../../common/models';
 import { selectStockBySymbol } from '../../stock/repository/selectStock';
 import { insertUserStock } from '../repository/insertUserStock';
 
-export const addUserStockValidation = () => {
+export const userStockValidation = () => {
   return [
     body('stockSymbol').exists().withMessage('Not exists').isString().withMessage('Not string'),
     body('count').exists().withMessage('Not exists').isInt({ min: 1 }).withMessage('Not number'),
