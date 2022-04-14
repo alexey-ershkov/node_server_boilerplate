@@ -1,6 +1,6 @@
 import { pool } from '../../../database/pool';
-import { Stock } from '../../../models/Stock';
-import { camelize } from '../../../utils/transforms';
+import { Stock } from '../../../models';
+import { camelize } from '../../../utils';
 
 const baseQuery =
   'select count, symbol, name, logo, website, country, ' +

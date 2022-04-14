@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import { omit } from 'lodash';
 
-import { AppResponse } from '../../../models/AppResponse';
-import { UserInfo } from '../../../models/User';
-import { decamelize } from '../../../utils/transforms';
+import { AppResponse, UserInfo } from '../../../models';
+import { decamelize } from '../../../utils';
 import { selectUserById } from '../repository/selectUser';
 
 export const getUser = async (req: Request, resp: Response) => {

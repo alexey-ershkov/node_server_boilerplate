@@ -1,6 +1,6 @@
 import { pool } from '../../../database/pool';
-import { UserStock } from '../../../models/UserStock';
-import { logger } from '../../../utils/logger';
+import { UserStock } from '../../../models';
+import { logger } from '../../../utils';
 
 const insertQuery =
   'insert into users_stock (user_id, stock_symbol, count)  values ($1, $2, $3) on conflict (user_id,stock_symbol) ' +

@@ -1,8 +1,7 @@
 import type { Request, Response } from 'express';
 
-import { AppResponse } from '../../../models/AppResponse';
-import { UserInfo } from '../../../models/User';
-import { decamelize } from '../../../utils/transforms';
+import { AppResponse, UserInfo } from '../../../models';
+import { decamelize } from '../../../utils';
 import { selectUserStocksById } from '../repository/selectUserStocks';
 
 export const getUserStocks = async (req: Request, resp: Response) => {

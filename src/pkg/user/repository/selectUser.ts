@@ -1,6 +1,6 @@
 import { pool } from '../../../database/pool';
-import { User } from '../../../models/User';
-import { camelize } from '../../../utils/transforms';
+import { User } from '../../../models';
+import { camelize } from '../../../utils';
 
 const baseQuery = 'select id, email, first_name, last_name, balance, password from users';
 const selectByIdQuery = `${baseQuery} where id = $1`;

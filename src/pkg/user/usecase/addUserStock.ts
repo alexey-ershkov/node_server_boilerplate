@@ -1,8 +1,7 @@
 import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
-import { AppResponse } from '../../../models/AppResponse';
-import { UserStock } from '../../../models/UserStock';
+import { AppResponse, UserStock } from '../../../models';
 import { selectStockBySymbol } from '../../stock/repository/selectStock';
 import { insertUserStock } from '../repository/insertUserStock';
 

@@ -1,6 +1,6 @@
 import { pool } from '../../../database/pool';
-import { Stock } from '../../../models/Stock';
-import { camelize } from '../../../utils/transforms';
+import { Stock } from '../../../models';
+import { camelize } from '../../../utils';
 
 const baseQuery =
   'select symbol, name, logo, website, country, exchange, ipo, market_capitalization, phone, share_outstanding, industry from stocks';

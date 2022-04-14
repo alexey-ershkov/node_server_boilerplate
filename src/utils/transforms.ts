@@ -1,4 +1,3 @@
-import { hashSync } from 'bcrypt';
 import { camelCase, mapKeys, snakeCase } from 'lodash';
 
 export const decamelize = (input) => {
@@ -16,5 +15,3 @@ export const camelize = (input) => {
 
   return mapKeys(input, (v, k) => camelCase(k));
 };
-
-export const hash = (data) => hashSync(data, 5);

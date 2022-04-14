@@ -3,10 +3,8 @@ import dotenv from 'dotenv';
 import type { Request, Response } from 'express';
 import { isEmpty } from 'lodash';
 
-import { AppResponse } from '../../../models/AppResponse';
-import { FinnhubStock, Stock } from '../../../models/Stock';
-import { logger } from '../../../utils/logger';
-import { decamelize } from '../../../utils/transforms';
+import { AppResponse, FinnhubStock, Stock } from '../../../models';
+import { decamelize, logger } from '../../../utils';
 import { insertStock } from '../repository/insertStock';
 import { selectAllStocks, selectStockBySymbol } from '../repository/selectStock';
 

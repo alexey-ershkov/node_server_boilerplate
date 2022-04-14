@@ -1,6 +1,6 @@
 import { pool } from '../../../database/pool';
-import { CreateUserInfo } from '../../../models/User';
-import { logger } from '../../../utils/logger';
+import { CreateUserInfo } from '../../../models';
+import { logger } from '../../../utils';
 
 const insertQuery =
   'insert into users (email, first_name, last_name, password) values ($1, $2, $3, $4) returning id';

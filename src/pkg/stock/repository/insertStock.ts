@@ -1,6 +1,6 @@
 import { pool } from '../../../database/pool';
-import { Stock } from '../../../models/Stock';
-import { logger } from '../../../utils/logger';
+import { Stock } from '../../../models';
+import { logger } from '../../../utils';
 import { selectStockBySymbol } from './selectStock';
 
 const insertQuery =

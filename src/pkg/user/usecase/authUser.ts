@@ -3,10 +3,8 @@ import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import { omit } from 'lodash';
 
-import { AppResponse } from '../../../models/AppResponse';
-import { AuthUserInfo, UserInfo } from '../../../models/User';
-import { setCookieUserId } from '../../../utils/cookie';
-import { decamelize } from '../../../utils/transforms';
+import { AppResponse, AuthUserInfo, UserInfo } from '../../../models';
+import { decamelize, setCookieUserId } from '../../../utils';
 import { selectUserByEmail } from '../repository/selectUser';
 
 export const authValidation = () => {
