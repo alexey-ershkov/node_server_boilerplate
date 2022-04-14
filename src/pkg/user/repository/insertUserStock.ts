@@ -1,5 +1,5 @@
+import { UserStock } from '../../../common/models';
 import { pool } from '../../../database/pool';
-import { UserStock } from '../../../models';
 import { logger } from '../../../utils';
 
 const insertQuery =

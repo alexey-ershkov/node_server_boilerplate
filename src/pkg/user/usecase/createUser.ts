@@ -1,8 +1,9 @@
 import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
-import { AppResponse, CreateUserInfo } from '../../../models';
-import { camelize, hash, setCookieUserId } from '../../../utils';
+import { AppResponse, CreateUserInfo } from '../../../common/models';
+import { camelize } from '../../../common/utils/transforms';
+import { hash, setCookieUserId } from '../../../utils';
 import { insertUser } from '../repository/insertUser';
 
 export const createUserValidation = () => {

@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
-import { AppResponse, UserStock } from '../../../models';
+import { AppResponse, UserStock } from '../../../common/models';
 import { selectStockBySymbol } from '../../stock/repository/selectStock';
 import { insertUserStock } from '../repository/insertUserStock';
 

@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { AppResponse } from '../models/AppResponse';
+import { AppResponse } from '../common/models/AppResponse';
 import { getCookieUserId } from '../utils/cookie';
 
 // eslint-disable-next-line consistent-return

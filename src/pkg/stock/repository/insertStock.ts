@@ -1,5 +1,5 @@
+import { Stock } from '../../../common/models';
 import { pool } from '../../../database/pool';
-import { Stock } from '../../../models';
 import { logger } from '../../../utils';
 import { selectStockBySymbol } from './selectStock';
 

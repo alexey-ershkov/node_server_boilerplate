@@ -1,5 +1,5 @@
+import { CreateUserInfo } from '../../../common/models';
 import { pool } from '../../../database/pool';
-import { CreateUserInfo } from '../../../models';
 import { logger } from '../../../utils';
 
 const insertQuery =
