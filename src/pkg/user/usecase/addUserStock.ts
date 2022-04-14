@@ -30,8 +30,6 @@ export const addUserStock = async (req: Request, resp: Response) => {
   const userStockAdd = req.body as UserStock;
   userStockAdd.userId = resp.locals.userId;
 
-  console.log(userStockAdd);
-
   const stock = await selectStockBySymbol(userStockAdd.stockSymbol);
   if (!stock) {
     return resp.status(404).send(<AppResponse<never>>{

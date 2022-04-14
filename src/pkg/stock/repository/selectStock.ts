@@ -13,5 +13,5 @@ export const selectStockBySymbol = async (symbol: string): Promise<Stock | null>
 
 export const selectAllStocks = async (): Promise<Stock[]> => {
   const { rows } = await pool.query(baseQuery);
-  return Promise.resolve(rows as Stock[]);
+  return Promise.resolve(camelize(rows) as Stock[]);
 };

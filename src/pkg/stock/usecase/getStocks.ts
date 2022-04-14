@@ -6,6 +6,7 @@ import { isEmpty } from 'lodash';
 import { AppResponse } from '../../../models/AppResponse';
 import { FinnhubStock, Stock } from '../../../models/Stock';
 import { logger } from '../../../utils/logger';
+import { decamelize } from '../../../utils/transforms';
 import { insertStock } from '../repository/insertStock';
 import { selectAllStocks, selectStockBySymbol } from '../repository/selectStock';
 
@@ -42,7 +43,9 @@ export const getStocksFromRemote = (symbols: string[]): boolean => {
 
 export const getAllStocks = async (req: Request, resp: Response) => {
   const allStocks = await selectAllStocks();
-  resp.send(allStocks);
+  resp.send(<AppResponse<Stock[]>>{
+    data: allStocks,
+  });
 };
 
 export const getStockBySymbol = async (req: Request<{ symbol?: string }>, resp: Response) => {
@@ -55,7 +58,7 @@ export const getStockBySymbol = async (req: Request<{ symbol?: string }>, resp: 
     }
 
     return resp.send(<AppResponse<Stock>>{
-      data: stock,
+      data: decamelize(stock),
     });
   }
 
