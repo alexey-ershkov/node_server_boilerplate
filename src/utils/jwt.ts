@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 
 import { logger } from './logger';
@@ -6,8 +5,6 @@ import { logger } from './logger';
 interface JWTPayload {
   id: number;
 }
-
-dotenv.config();
 
 export const generateJWT = (id: number): string => {
   return jwt.sign(<JWTPayload>{ id }, process.env.PRIVATE_KEY);
