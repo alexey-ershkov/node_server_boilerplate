@@ -11,7 +11,6 @@ import {
   createUser,
   createUserValidation,
   getUser,
-  getUserStock,
   getUserStocks,
   removeUserStock,
   userStockValidation,
@@ -49,13 +48,6 @@ export const api: Api = {
         method: 'get',
         middlewares: [authMiddleware],
         handler: getUserStocks,
-      },
-      // Получить акцию пользователя
-      {
-        url: '/stocks/:symbol',
-        method: 'get',
-        middlewares: [authMiddleware],
-        handler: getUserStock,
       },
       // Post methods
       // Войти

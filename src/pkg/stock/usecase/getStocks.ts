@@ -5,8 +5,9 @@ import { isEmpty } from 'lodash';
 
 import { AppResponse, FinnhubStock, Quote, Stock } from '../../../common/models';
 import { decamelize } from '../../../common/utils/transforms';
-import { logger } from '../../../utils';
+import { getCookieUserId, logger } from '../../../utils';
 import { insertStock, selectAllStocks, selectStockBySymbol } from '../repository';
+import { selectUserStockBySymbolAndId } from '../../user/repository';
 
 dotenv.config();
 const baseUrl = `https://finnhub.io/api/v1/stock/profile2?token=${process.env.FINNHUB_KEY}&symbol=`;
@@ -49,16 +50,42 @@ export const getAllStocks = async (req: Request, resp: Response) => {
 
 export const getStockBySymbol = async (req: Request<{ symbol?: string }>, resp: Response) => {
   if (req.params.symbol) {
-    const stock = await selectStockBySymbol(req.params.symbol);
-    if (!stock) {
-      return resp.status(404).send(<AppResponse<never>>{
-        errors: [`Stock with symbol ${req.params.symbol} not found`],
+    const userId = getCookieUserId(req);
+
+    if (!userId) {
+      const stock = await selectStockBySymbol(req.params.symbol);
+      if (!stock) {
+        return resp.status(404).send(<AppResponse<never>>{
+          errors: [`Stock with symbol ${req.params.symbol} not found`],
+        });
+      }
+
+      return resp.send(<AppResponse<Stock & Quote>>{
+        data: decamelize(stock),
       });
     }
 
-    return resp.send(<AppResponse<Stock & Quote>>{
-      data: decamelize(stock),
-    });
+    if (req.params.symbol) {
+      const userStock = await selectUserStockBySymbolAndId(req.params.symbol, userId);
+      if (!userStock) {
+        const stock = (await selectStockBySymbol(req.params.symbol)) as Stock &
+          Quote & { count: number };
+        if (!stock) {
+          return resp.status(404).send(<AppResponse<never>>{
+            errors: [`Stock with symbol ${req.params.symbol} not found`],
+          });
+        }
+
+        stock.count = 0;
+        return resp.send(<AppResponse<Stock & Quote & { count: number }>>{
+          data: decamelize(stock),
+        });
+      }
+
+      return resp.send(<AppResponse<Stock & { count: number }>>{
+        data: decamelize(userStock),
+      });
+    }
   }
 
   return resp.status(400).send(<AppResponse<never>>{
