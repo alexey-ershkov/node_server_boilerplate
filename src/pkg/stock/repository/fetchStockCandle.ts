@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-import { FinnhubCandles, StockResolution } from '../../../common/models';
-import { toUnixTimestamp } from '../../../utils';
+import { FinnhubCandles, StockCandle, StockResolution } from '../../../common/models';
+import { logger } from '../../../utils';
+import { finnhubToStockCandles } from '../../../utils/finnhubToStockCandles';
 
 const baseUrl = `https://finnhub.io/api/v1/stock/candle?`;
 
@@ -9,10 +10,21 @@ export const fetchStockCandle = async (
   symbol: string,
   resolution: StockResolution,
   from: number,
-  to: number = toUnixTimestamp(Date.now()),
-) => {
+  to: number,
+): Promise<StockCandle[] | null> => {
   const params = `token=${process.env.FINNHUB_KEY}&symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}`;
 
-  const { data } = await axios.get<FinnhubCandles>(baseUrl + params);
-  console.log(data);
+  try {
+    const { data } = await axios.get<FinnhubCandles>(baseUrl + params);
+    if (data.s === 'no_data') {
+      return null;
+    }
+    return finnhubToStockCandles(data);
+  } catch (e) {
+    logger.error(
+      `Error while req for candles symbol ${symbol}, res ${resolution} from ${from} to ${to}`,
+    );
+  }
+
+  return null;
 };

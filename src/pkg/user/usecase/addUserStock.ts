@@ -5,12 +5,10 @@ import { AppResponse, UserStock } from '../../../common/models';
 import { selectStockBySymbol } from '../../stock/repository';
 import { insertUserStock } from '../repository';
 
-export const userStockValidation = () => {
-  return [
-    body('stockSymbol').exists().withMessage('Not exists').isString().withMessage('Not string'),
-    body('count').exists().withMessage('Not exists').isInt({ min: 1 }).withMessage('Not number'),
-  ];
-};
+export const userStockValidation = () => [
+  body('stockSymbol').exists().withMessage('Not exists').isString().withMessage('Not string'),
+  body('count').exists().withMessage('Not exists').isInt({ min: 1 }).withMessage('Not number'),
+];
 
 export const addUserStock = async (req: Request, resp: Response) => {
   const errors = validationResult(req);

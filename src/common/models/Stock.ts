@@ -25,6 +25,28 @@ export interface Quote {
   updatedAt: string;
 }
 
+export interface StockCandle {
+  close: number;
+  open: number;
+  high: number;
+  low: number;
+  time: string;
+}
+
+export type StockResolution = '1' | '5' | '15' | '30' | '60' | 'D' | 'W' | 'M';
+
+export type StockCandleQuery = {
+  symbols: string;
+  resolution?: StockResolution;
+  timeFrom?: string;
+  timeTo?: string;
+};
+
+export type StockCandleResponse = {
+  symbol: string;
+  candles: StockCandle[] | 'Data not found';
+};
+
 export type FinnhubStock = Omit<Stock, 'symbol' | 'website' | 'industry'> & {
   ticker: string;
   weburl: string;
@@ -49,5 +71,3 @@ export type FinnhubQuote = {
   pc: number;
   t: number;
 };
-
-export type StockResolution = '1' | '5' | '15' | '30' | '60' | 'D' | 'W' | 'M';

@@ -3,7 +3,7 @@ import { ValidationChain } from 'express-validator';
 
 import { authMiddleware } from '../middlewares/auth';
 import { getAllStocks, getStockBySymbol } from '../pkg/stock/usecase';
-import { getStocksCandles } from '../pkg/stock/usecase/getStocksCandles';
+import { getStocksCandle, stockCandlesValidation } from '../pkg/stock/usecase/getStocksCandle';
 import {
   addUserStock,
   authUser,
@@ -101,11 +101,16 @@ export const api: Api = {
         handler: getAllStocks,
       },
       // Получить свечи для акций
+      // Query params:
+      // - symbols обязательный. Акции через запятую (AAPL,IBM)
+      // - resolution - разрешение, по умолчанию день
+      // - timeFrom - получение информации с текущей даты, по умолчанию предыдущий день
+      // - timeTo - до какой даты, по умолчанию текущая дата
       {
         url: '/candles',
         method: 'get',
-        middlewares: [],
-        handler: getStocksCandles,
+        middlewares: [stockCandlesValidation()],
+        handler: getStocksCandle,
       },
       // Получить информацию об одной акции
       {

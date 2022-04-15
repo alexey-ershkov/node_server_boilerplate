@@ -8,12 +8,10 @@ import { decamelize } from '../../../common/utils/transforms';
 import { setCookieUserId } from '../../../utils';
 import { selectUserByEmail } from '../repository';
 
-export const authValidation = () => {
-  return [
-    body('password').exists().withMessage('Not exists').isString().withMessage('Not string'),
-    body('email').exists().withMessage('Not exists').isEmail().withMessage('Invalid Email'),
-  ];
-};
+export const authValidation = () => [
+  body('password').exists().withMessage('Not exists').isString().withMessage('Not string'),
+  body('email').exists().withMessage('Not exists').isEmail().withMessage('Invalid Email'),
+];
 
 export const authUser = async (req: Request, resp: Response) => {
   const errors = validationResult(req);

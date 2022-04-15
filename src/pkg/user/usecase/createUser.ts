@@ -7,16 +7,14 @@ import { camelize } from '../../../common/utils/transforms';
 import { hash, setCookieUserId } from '../../../utils';
 import { insertUser } from '../repository';
 
-export const createUserValidation = () => {
-  return [
-    body(['first_name', 'last_name', 'password'])
-      .exists()
-      .withMessage('Not exists')
-      .isString()
-      .withMessage('Not string'),
-    body('email').exists().withMessage('Not exists').isEmail().withMessage('Invalid Email'),
-  ];
-};
+export const createUserValidation = () => [
+  body(['first_name', 'last_name', 'password'])
+    .exists()
+    .withMessage('Not exists')
+    .isString()
+    .withMessage('Not string'),
+  body('email').exists().withMessage('Not exists').isEmail().withMessage('Invalid Email'),
+];
 
 export const createUser = async (req: Request, resp: Response) => {
   const errors = validationResult(req);
