@@ -22,7 +22,7 @@ export const fetchStockCandle = async (
     return finnhubToStockCandles(data);
   } catch (e) {
     logger.error(
-      `Error while req for candles symbol ${symbol}, res ${resolution} from ${from} to ${to}`,
+      `Error while req for candles. Error: ${e.message}  Meta: symbol ${symbol}, res ${resolution} from ${from} to ${to}`,
     );
   }
 

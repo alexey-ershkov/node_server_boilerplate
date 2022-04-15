@@ -8,6 +8,7 @@ import {
   insertUserStock,
   selectUserStockBySymbolAndId,
 } from '../repository';
+import { updateBalance } from '../repository/updateBalance';
 
 export const removeUserStock = async (req: Request, resp: Response) => {
   const errors = validationResult(req);
@@ -57,6 +58,8 @@ export const removeUserStock = async (req: Request, resp: Response) => {
   userStockRemove.count = -userStockRemove.count;
 
   const newCount = await insertUserStock(userStockRemove);
+
+  await updateBalance(resp.locals.userId, userStock.count * stock.currentPrice);
 
   if (userStock.count === -userStockRemove.count) {
     await deleteUserStocksBySymbolAndId(userStockRemove.stockSymbol, userStockRemove.userId);

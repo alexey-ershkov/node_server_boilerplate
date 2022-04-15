@@ -15,6 +15,7 @@ import {
   removeUserStock,
   userStockValidation,
 } from '../pkg/user/usecase';
+import { addBalance, addBalanceValidation } from '../pkg/user/usecase/addBalance';
 
 export type Path = {
   url: string;
@@ -63,6 +64,13 @@ export const api: Api = {
         method: 'post',
         middlewares: [createUserValidation()],
         handler: createUser,
+      },
+      // Обновить баланс
+      {
+        url: '/balance',
+        method: 'post',
+        middlewares: [authMiddleware, addBalanceValidation()],
+        handler: addBalance,
       },
       // Добавить акции
       {

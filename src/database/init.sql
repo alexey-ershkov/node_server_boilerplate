@@ -12,7 +12,7 @@ create table users
     first_name text               not null,
     last_name  text               not null,
     password   text               not null,
-    balance    bigint default 0
+    balance    float default 0
 );
 
 create table stocks
@@ -49,5 +49,5 @@ create table quote
     low            float                          not null,
     open           float                          not null,
     prev_close     float                          not null,
-    updated_at     timestamp                           not null
+    updated_at     timestamp                      not null
 );
