@@ -28,8 +28,8 @@ export const getStocksCandle = async (
 
   const {
     symbols,
-    resolution = '5',
-    timeFrom = sub(Date.now(), { days: 1 }),
+    resolution = '30',
+    timeFrom = sub(Date.now(), { days: 7 }),
     timeTo = Date.now(),
   } = req.query;
 

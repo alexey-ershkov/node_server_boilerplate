@@ -1,6 +1,5 @@
 import { FinnhubCandles } from '../common';
 import { StockCandle } from '../common/models';
-import { toISODate } from './dateFormats';
 
 export const finnhubToStockCandles = (finnhubCandles: FinnhubCandles): StockCandle[] => {
   const len = finnhubCandles.t.length;
@@ -12,7 +11,8 @@ export const finnhubToStockCandles = (finnhubCandles: FinnhubCandles): StockCand
       low: finnhubCandles.l[i],
       high: finnhubCandles.h[i],
       open: finnhubCandles.o[i],
-      time: toISODate(finnhubCandles.t[i] * 1000),
+      time: finnhubCandles.t[i],
+      value: finnhubCandles.v[i],
     });
   }
 

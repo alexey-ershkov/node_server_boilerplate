@@ -30,7 +30,8 @@ export interface StockCandle {
   open: number;
   high: number;
   low: number;
-  time: string;
+  time: number;
+  value: number;
 }
 
 export type StockResolution = '1' | '5' | '15' | '30' | '60' | 'D' | 'W' | 'M';
@@ -59,6 +60,7 @@ export type FinnhubCandles = {
   o: number[];
   s: 'ok' | 'no_data';
   t: number[];
+  v: number[];
 };
 
 export type FinnhubQuote = {

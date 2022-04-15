@@ -5,7 +5,7 @@ import { pool } from '../../../database/pool';
 const baseQuery =
   'select count, s.symbol, name, logo, website, country, ' +
   'exchange, ipo, market_capitalization, phone, ' +
-  'share_outstanding, industry ' +
+  'share_outstanding, industry, ' +
   'current_price, change, percent_change, high, low, open, prev_close, updated_at ' +
   'from users_stock ' +
   'join stocks s on s.symbol = users_stock.stock_symbol join quote q on s.symbol = q.symbol';

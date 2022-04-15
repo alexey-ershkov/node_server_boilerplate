@@ -22,7 +22,7 @@ export const getQuotesFromRemote = async (symbol: string): Promise<boolean> => {
         percentChange: data.dp,
         prevClose: data.pc,
         updatedAt: formatISO(data.t * 1000),
-        change: data.c,
+        change: data.d,
         open: data.o,
       };
 
