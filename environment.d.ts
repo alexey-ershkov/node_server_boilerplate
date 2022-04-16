@@ -25,7 +25,7 @@ interface Locals {
 
 declare module 'express' {
   export interface Response {
-    locals: Locals;
+    locals: Record<any, any> & Locals;
   }
 }
 
