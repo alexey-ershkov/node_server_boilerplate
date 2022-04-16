@@ -109,3 +109,5 @@ dist/
 .env
 
 .DS_Store
+
+build/
