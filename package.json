@@ -49,6 +49,7 @@
     "express-validator": "^6.14.0",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
+    "typescript": "^4.6.3",
     "winston": "^3.7.2"
   }
 }
