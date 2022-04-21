@@ -1,5 +1,7 @@
+import dotenv from 'dotenv';
 import type { NextFunction, Request, Response } from 'express';
 
+dotenv.config();
 const allowList = process.env.ALLOW_LIST.split(' ');
 
 const getAllowOrigin = (req: Request): string => {
